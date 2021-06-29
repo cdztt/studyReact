@@ -80,3 +80,96 @@ class LoggingButton extends React.Component {
 useEffect只能在after render后使用，不能用在before render。useLayoutEffect同样。
 如果确实需要在render之前获取数据，要么尽早return，也就意味着尽早useEffect；要么初始化一个空对象。
 如果确实必须一定要在render之前执行一些操作，在父组件里执行这些操作，在子组件里条件渲染。
+
+# 挂载后自动focus
+```
+import React, { useEffect, useState, useRef } from "react";
+import ReactDOM from "react-dom";
+function App() {
+  const inputRef = useRef();
+  const [value, setValue] = useState("");
+  useEffect(
+    () => {
+      console.log("render");
+      inputRef.current.focus();
+    },
+    [inputRef]
+  );
+  return (
+    <input
+      ref={inputRef}
+      value={value}
+      onChange={e => setValue(e.target.value)}
+    />
+  );
+}
+ReactDOM.render(<App />, document.querySelector("#root"));
+```
+> useRef()的返回值在rerender之间不会改变，所以useEffect依赖inputRef，**只在mount之后执行一次**
+
+# useState的一些细节
+```
+const [inputValue, setValue] = useState("reactjs");
+const [subreddit, setSubreddit] = useState(inputValue);
+```
+* setValue在每次渲染时是不变的，可以用作useEffect的第二个参数，只在didmount后执行一次
+* inputValue是一个受控input组件的value，所以每次键入都会update并重新渲染，但是不影响第二行的useState，因为useState只使用一次初始值，会忽略后面inputValue的改变
+
+# 把回调放在useEffect里面
+```
+const doStuff = () => { ... }//不要放这里
+useEffect(() => {
+  const doStuff = () => { ... }//放这里
+  if(whatever) {
+    doStuff();
+  }
+}, [whatever/*, doStuff*/]);//放里面就可以不用依赖doStuff
+```
+> 因为每次渲染的时候react都会调用组件函数，如果放在外面每次渲染都会recreate一个doStuff，如果effect依赖了doStuff则导致每次渲染都会执行effect。
+> 注意：effect的依赖除了props和state，可以是任何变量包括函数
+
+# 必须要用setState(prev=>{})的场合
+```
+const [list, setList] = useState([]);
+
+const showLoading = useCallback((id, loading) => {
+  // Update the list
+  setList(currentList => currentList.map(item => {
+    if(item.id === id) {
+      return {
+        ...item,
+        isLoading: loading
+      }
+    }
+    return item;
+  }));
+}, []); // <-- depends on nothing, now
+/*如果这样写就错了，会导致无限循环
+  setList(list.map(item => {
+    if(item.id === id) {
+      return {
+        ...item,
+        isLoading: loading
+      }
+    }
+    return item;
+  }));
+}, [list]);
+*/
+
+useEffect(() => {
+  // Connect the websocket
+  const ws = new Websocket(...);
+
+  // A message signals to reload one of the `list` items
+  ws.addEventListener("message", e => {
+    showLoading(e.id, true);
+  });
+
+  // Before next effect runs, close this websocket
+  return () => ws.close();
+}, [showLoading]); // <-- showLoading will never change
+```
+> 这个例子有点像做单片机通信的时候用的tcp socket，tcp的消息监听器一旦收到消息就会异步执行，包括某些setState的操作，由于是异步的setState，state的改变并不会及时反应给另一个线程
+> 这个时候就需要用setState(prev=>{})以确保得到的是上一个state，否则如果直接使用局部作用域里的state，有可能state已经在别处更新了，但是这个作用域里还没有体现出来
+> 另外，effect的清理函数依然在render之后才执行，和effect一样
