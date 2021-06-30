@@ -179,10 +179,14 @@ useEffect(() => {
 
 > 百度leetcode看到知呼上面有人问前端要不要刷题，有人回答：别人刷了你能不刷。这和辅导班别人孩子报了你能不报？是一个逻辑
 
-> 知呼上这个问题一问，leetcode广告投放者、上岸装b者、无脑舔狗者这3者一回答，就立刻确定了答案：前端当然要刷leetcode
+> 知呼上这个问题一问，leetcode广告投放者、大厂装b者、无脑舔狗者这3者一回答，就立刻确定了答案：前端当然要刷leetcode
 
-> 简直扯！！就学习路径和学习曲线来说，数据结构算法根本不是前端必须的，当然了作为兴趣爱好、技能完善、生涯规划，自己去刷leetcode那是自己的事
+> 简直扯！！就学习路径和学习曲线来说，数据结构算法根本不是前端必须的，当然了作为兴趣爱好、技能完善、生涯规划，自己去刷leetcode那是自己的事，对前端来说，学习design pattern的优先级都要大于算法
 
-> 比如像这位[大神说的话](https://overreacted.io/things-i-dont-know-as-of-2018/)，人家罗列了自己不懂的技术他也不懂Algorithms，但他是react和redux核心成员
+> 看看[这位大神说的话](https://overreacted.io/things-i-dont-know-as-of-2018/)，人家罗列了自己不懂的技术他也不懂Algorithms，但他是react和redux核心成员。他说他知道的算法复杂度就是不要在循环里面套循环，这是一种幽默感，让生活更轻松
 
 > leetcode是大洋彼岸文化环境下的产物，[苹果公司一半员工没有大学文凭](https://9to5mac.com/2019/03/06/tim-cook-trump-meeting-education/)，到了这里变成了一个行业内卷的文化，应试教育的延伸，机构营销的伎俩
+
+> 因为大学生他学java他学python，就前端框架来说他学vue他学react，学校里也没有实际的项目经验，大学里只教了数据结构课程，企业只能用算法题来考察编程素养和逻辑思维了。但，就前端来说，[高中毕业后当了10年厨师的妹子也能开发前端](https://www.taniarascia.com/how-i-made-a-career-change-into-web-development/)
+
+> 当然了leetcode我会刷用python，原因一编程是我的爱好就像我捣鼓arduino单片机，原因二我也想装b。但是对任何的内卷思维的输出，我只想说fuc u
