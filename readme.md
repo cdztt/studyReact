@@ -189,4 +189,4 @@ useEffect(() => {
 
 > 因为大学生他学java他学python，就前端框架来说他学vue他学react，学校里也没有实际的项目经验，大学里只教了数据结构课程，企业只能用算法题来考察编程素养和逻辑思维了。但，就前端来说，[高中毕业后当了10年厨师的妹子也能开发前端](https://www.taniarascia.com/how-i-made-a-career-change-into-web-development/)
 
-> 当然了leetcode我会刷用python，原因一编程是我的爱好就像我捣鼓arduino单片机，原因二我也想装b。但是对任何的内卷思维的输出，我只想说fuc u
+> [redux官网上有一段讲了useCallback和React.memo的用法](https://react-redux.js.org/api/hooks#usedispatch)，[React.memo是一个高阶函数...](https://reactjs.org/docs/react-api.html#reactmemo),就不写总结了，直接看官网文档
